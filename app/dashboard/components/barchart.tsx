@@ -19,7 +19,7 @@ import { computeBatchVolume } from "@/lib/utils_dashboard"
 import { useHistoricalVol } from "@/hooks/hooks"
 
 import { Batch } from "../datatable/columns"
-
+import Skeleton from "react-loading-skeleton"
 function mergeData(formattedData, formattedCowData) {
   const mergedData = formattedData.map((item) => {
     const cowItem = formattedCowData.find((cow) => cow.name === item.name)
@@ -101,79 +101,83 @@ export function Overview({ data: cowData }: { data: Batch[] }) {
   // console.log("formatted cow data is", formattedCowData)
 
   return (
-    <ResponsiveContainer width="100%" height={350}>
+    <>
       {formattedData && isLoading == false ? (
-        <ComposedChart data={mergedData}>
-          <CartesianGrid strokeDasharray="3 3" vertical={false} />
+        <ResponsiveContainer width="100%" height={350}>
+          <ComposedChart data={mergedData}>
+            <CartesianGrid strokeDasharray="3 3" vertical={false} />
 
-          <XAxis
-            dataKey="name"
-            stroke="#888888"
-            fontSize={12}
-            tickLine={false}
-            axisLine={false}
-          />
-          <YAxis
-            stroke="#888888"
-            fontSize={12}
-            tickLine={true}
-            axisLine={false}
-            tickFormatter={(value) =>
-              Intl.NumberFormat("en-US", {
-                style: "currency",
-                currency: "USD",
-                notation: "compact",
-                compactDisplay: "long",
-              }).format(value)
-            }
-          />
-          <Bar
-            dataKey="total"
-            name="Daily Volume"
-            fill="#1d4ea8"
-            radius={[4, 4, 0, 0]}
-          />
-          <Bar
-            dataKey="cowVolume"
-            name="CoW Volume"
-            fill="#f44336"
-            radius={[4, 4, 0, 0]}
-          />
-          <YAxis
-            yAxisId="orders"
-            orientation="right"
-            stroke="#888888"
-            fontSize={12}
-            tickLine={true}
-            axisLine={false}
-            // double max to dataMax
-            type="number"
-            domain={[0, (dataMax) => dataMax * 1.4]}
-          />
-          <Line
-            type="monotone"
-            dataKey="trades"
-            name="Trades"
-            stroke="#ff7300"
-            yAxisId={"orders"}
-            isAnimationActive={true}
-          />
+            <XAxis
+              dataKey="name"
+              stroke="#888888"
+              fontSize={12}
+              tickLine={false}
+              axisLine={false}
+            />
+            <YAxis
+              stroke="#888888"
+              fontSize={12}
+              tickLine={true}
+              axisLine={false}
+              tickFormatter={(value) =>
+                Intl.NumberFormat("en-US", {
+                  style: "currency",
+                  currency: "USD",
+                  notation: "compact",
+                  compactDisplay: "long",
+                }).format(value)
+              }
+            />
+            <Bar
+              dataKey="total"
+              name="Daily Volume"
+              fill="#1d4ea8"
+              radius={[4, 4, 0, 0]}
+            />
+            <Bar
+              dataKey="cowVolume"
+              name="CoW Volume"
+              fill="#f44336"
+              radius={[4, 4, 0, 0]}
+            />
+            <YAxis
+              yAxisId="orders"
+              orientation="right"
+              stroke="#888888"
+              fontSize={12}
+              tickLine={true}
+              axisLine={false}
+              // double max to dataMax
+              type="number"
+              domain={[0, (dataMax) => dataMax * 1.4]}
+            />
+            <Line
+              type="monotone"
+              dataKey="trades"
+              name="Trades"
+              stroke="#ff7300"
+              yAxisId={"orders"}
+              isAnimationActive={true}
+            />
 
-          <Tooltip cursor={{ fill: "transparent" }} />
-          {/* Add legend top right and can click on it to hide bars */}
-          <Legend
-            verticalAlign="top"
-            align="right"
-            wrapperStyle={{ top: -10 }}
-          />
+            <Tooltip cursor={{ fill: "transparent" }} />
+            {/* Add legend top right and can click on it to hide bars */}
+            <Legend
+              verticalAlign="top"
+              align="right"
+              wrapperStyle={{ top: -10 }}
+            />
 
-          {/* <Legend /> */}
-        </ComposedChart>
+            {/* <Legend /> */}
+          </ComposedChart>
+        </ResponsiveContainer>
       ) : (
-        <div>Loading...</div>
-      )}
-    </ResponsiveContainer>
+        <Skeleton count={10} />
+      )
+      }
+    </>
   )
+
 }
 // import { BarChart, Card, Text, Title } from "@tremor/react"
 

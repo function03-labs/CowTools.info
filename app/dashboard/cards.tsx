@@ -1,7 +1,5 @@
 "use client"
 
-import { useEffect } from "react"
-import { Activity, CreditCard, DollarSign, Download, Users } from "lucide-react"
 
 import { computeBatchVolume } from "@/lib/utils_dashboard"
 import { useDailyVolume, useNumTransactions } from "@/hooks/hooks"
@@ -14,10 +12,22 @@ import {
 } from "@/components/ui/ui/card"
 
 import { Batch } from "./datatable/columns"
+import Skeleton from 'react-loading-skeleton';
+import { useState, useEffect } from 'react';
 
-export default function Cards({ data: CowData }: { data: Batch[] }) {
+// ...
+
+export default function Cards({ data: CowDataPromise }: { data: Promise<Batch[]> }) {
   const { data: dailyVolume, isLoading: isDailyVolumeLoading } =
     useDailyVolume()
+
+  const [CowData, setCowData] = useState<Batch[] | null>(null);
+
+  useEffect(() => {
+    CowDataPromise.then((data) => {
+      setCowData(data);
+    });
+  }, [CowDataPromise]);
 
   const last24hVolume = dailyVolume
     ?.slice(0, 24) // get the first 24 entries
@@ -50,7 +60,6 @@ export default function Cards({ data: CowData }: { data: Batch[] }) {
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-sm font-medium">Daily Volume</CardTitle>
-          <DollarSign className="h-4 w-4 text-muted-foreground" />
         </CardHeader>
         <CardContent>
           <div
@@ -63,7 +72,7 @@ export default function Cards({ data: CowData }: { data: Batch[] }) {
                   style: "currency",
                   currency: "USD",
                   notation: "compact",
-                  minimumFractionDigits: 3,
+                  // minimumFractionDigits: 3,
                   maximumFractionDigits: 3,
                 })}
                 <span className=" text-xs font-medium ">
@@ -82,24 +91,22 @@ export default function Cards({ data: CowData }: { data: Batch[] }) {
                 </span>
               </>
             ) : (
-              <div className="animate-pulse">Loading...</div>
+              <Skeleton />
             )}
           </div>
           <p className="hidden text-xs text-muted-foreground sm:block">
-            Total volume of CoW transactions in the last 24 hours
+            Total volume traded in the last 24 hours
           </p>
         </CardContent>
       </Card>
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-sm font-medium">Daily Batches</CardTitle>
-          <Users className="h-4 w-4 text-muted-foreground" />
         </CardHeader>
         <CardContent>
           <div
-            className={`${
-              last24hVolume && "animate-blink"
-            } text-2xl font-bold transition-colors`}
+            className={`${last24hVolume && "animate-blink"
+              } text-2xl font-bold transition-colors`}
           >
             {last24hBatches ? (
               <>
@@ -119,7 +126,7 @@ export default function Cards({ data: CowData }: { data: Batch[] }) {
                 </span>
               </>
             ) : (
-              <div className="animate-pulse">Loading...</div>
+              <Skeleton />
             )}{" "}
           </div>
 
@@ -131,11 +138,10 @@ export default function Cards({ data: CowData }: { data: Batch[] }) {
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-sm font-medium">CoWiness Volume</CardTitle>
-          <CreditCard className="h-4 w-4 text-muted-foreground" />
         </CardHeader>
         <CardContent>
           <div className="text-2xl font-bold">
-            {CowData?.filter(
+            {!CowData ? <Skeleton /> : CowData?.filter(
               (batch) =>
                 batch.firstTradeTimestamp * 1000 >
                 new Date(new Date().getTime() - 24 * 60 * 60 * 1000).getTime()
@@ -150,13 +156,13 @@ export default function Cards({ data: CowData }: { data: Batch[] }) {
                 style: "currency",
                 currency: "USD",
                 notation: "compact",
-                minimumFractionDigits: 3,
+                // minimumFractionDigits: 3,
                 maximumFractionDigits: 3,
               })}{" "}
           </div>
 
           <p className="hidden text-xs text-muted-foreground sm:block">
-            Daily volume from Coincidence of Wants in batch auctions
+            Daily volume from CoWs in batch auctions
           </p>
         </CardContent>
       </Card>
@@ -165,22 +171,21 @@ export default function Cards({ data: CowData }: { data: Batch[] }) {
           <CardTitle className="text-sm font-medium">
             Fully Matched CoWs
           </CardTitle>
-          <Activity className="h-4 w-4 text-muted-foreground" />
         </CardHeader>
         <CardContent>
           <div className="text-2xl font-bold">
-            {
+            {!CowData ? <Skeleton /> :
               CowData?.filter(
                 (batch) =>
                   batch.firstTradeTimestamp * 1000 >
-                    new Date(
-                      new Date().getTime() - 24 * 60 * 60 * 1000
-                    ).getTime() && Number(batch.cowiness) >= 0.9
+                  new Date(
+                    new Date().getTime() - 24 * 60 * 60 * 1000
+                  ).getTime() && Number(batch.cowiness) >= 0.9
               ).length
             }
           </div>
           <p className="hidden text-xs text-muted-foreground sm:block">
-            Number of fully matched CoWs in the last 24 hours
+            Fully matched CoWs in the last 24 hours
           </p>
           {/* <p className="text-xs text-muted-foreground">
                     +201 since last hour
