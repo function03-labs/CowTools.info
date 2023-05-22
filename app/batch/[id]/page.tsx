@@ -90,7 +90,8 @@ export default function BatchPage({
     <>
       <Navbar />
       <Card
-        className="mx-auto ring-opacity-0 dark:bg-black dark:ring-slate-500 md:my-10 md:max-w-lg md:ring-opacity-100 lg:max-w-2xl xl:max-w-4xl"
+        // eslint-disable-next-line tailwindcss/migration-from-tailwind-2
+        className="mx-auto !ring-opacity-0 dark:bg-black dark:ring-slate-500 md:my-10 md:max-w-lg md:ring-opacity-100 lg:max-w-2xl xl:max-w-4xl"
         style={{
           overflow: "hidden",
           textOverflow: "ellipsis",

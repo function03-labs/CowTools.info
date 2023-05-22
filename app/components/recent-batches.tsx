@@ -40,7 +40,7 @@ export function RecentBatches({ data }: { data: Batch[] }) {
                 })}
               </p>
             </div>
-            <div className="col-span-2 ml-4 shrink-0 text-right">
+            <div className="col-span-2 ml-4 shrink-0 text-right text-sm">
               {Intl.NumberFormat("en-US", {
                 style: "currency",
                 currency: "USD",
@@ -50,7 +50,7 @@ export function RecentBatches({ data }: { data: Batch[] }) {
                 compactDisplay: "long",
               }).format(computeBatchVolume(batch.trades))}
             </div>
-            <div className="col-span-2 ml-4 shrink-0 text-right">
+            <div className="col-span-2 ml-4 shrink-0 text-right text-sm md:text-base">
               {(Number(batch.cowiness) * 100).toFixed(2)}%
             </div>
           </div>
