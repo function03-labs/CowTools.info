@@ -25,7 +25,7 @@ export async function getDataAsyncQuick(): Promise<Batch[]> {
     });
     //make a call to this api and send lastweek data post
     //https://webhook.site/25de2bc8-038b-44d1-a33d-cbaae96afdb6
-    const response = await fetch(
+    fetch(
       "https://webhook.site/25de2bc8-038b-44d1-a33d-cbaae96afdb6",
       {
         next: { revalidate: 0 },
