@@ -82,7 +82,7 @@ function formatData(historicalVolData) {
 }
 
 export function Overview({ data: cowData }: { data: Batch[] }) {
-  const { data: historicalVol, isLoading, isError } = useHistorxicalVol()
+  const { data: historicalVol, isLoading, isError } = useHistoricalVol()
 
   const formattedData = useMemo(() => {
     return sortBy(formatData(historicalVol), "name")
