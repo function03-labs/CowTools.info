@@ -1,9 +1,9 @@
 import { Batch } from "./datatable/columns";
 
 export async function getApiDataLastWeek(): Promise<Batch[]> {
-  const batchSize = 10000; // set batch size for pagination
+  const batchSize = 1000; // set batch size for pagination
   const now = new Date();
-  const sevenDaysAgo = new Date(now.getTime() - 162 * 60 * 60 * 1000);
+  const sevenDaysAgo = new Date(now.getTime() - 100 * 60 * 60 * 1000);
   const firstTradeTimestamp = Math.floor(sevenDaysAgo.getTime() / 1000);
 
   let page = 0;
