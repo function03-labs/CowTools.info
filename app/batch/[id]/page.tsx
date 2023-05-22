@@ -164,7 +164,7 @@ export default function BatchPage({
                   <Skeleton />
                 ) : (
                   <Text className=" dark:!text-inherit">
-                    <Bold>{cowinessData}%</Bold>
+                    <Bold>{`${(Number(cowinessData) * 100).toFixed(2)}`}%</Bold>
                   </Text>
                 )}
               </Flex>
@@ -175,8 +175,8 @@ export default function BatchPage({
                 <CategoryBar
                   categoryPercentageValues={[10, 25, 45, 20]}
                   colors={["red", "orange", "yellow", "emerald"]}
-                  percentageValue={cowinessData}
-                  tooltip={`${cowinessData}%`}
+                  percentageValue={Number(cowinessData) * 100}
+                  tooltip={`${(Number(cowinessData) * 100).toFixed(2)}%`}
                   className="mt-2"
                 />
               )}

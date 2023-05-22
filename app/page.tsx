@@ -19,70 +19,15 @@ import { RecentBatches } from "./components/recent-batches"
 import { Search } from "./components/search"
 import TeamSwitcher from "./components/team-switcher"
 import { UserNav } from "./components/user-nav"
-import { Batch, columns } from "./datatable/columns"
+import { columns } from "./datatable/columns"
 import { DataTable } from "./datatable/data-table"
-import { getDataAsyncQuick } from "../hooks/getDataAsyncQuick";
+import { getDataAsyncQuick } from "./getDataAsyncQuick";
+import { getApiDataLastWeek } from "./getApiDataLastWeek";
 
 export const metadata: Metadata = {
   title: "Dashboard",
   description: "CowSwap Dashboard to visualize Coincidence of Wants in Batch Auctions",
 }
-
-async function getApiDataLastWeek(): Promise<Batch[]> {
-  const batchSize = 1000 // set batch size for pagination
-  const now = new Date()
-  const twoDaysAgo = new Date(now.getTime() - 162 * 60 * 60 * 1000)
-  const firstTradeTimestamp = Math.floor(twoDaysAgo.getTime() / 1000)
-
-  let page = 0
-  let allData: Batch[] = []
-
-  while (true) {
-    const data = JSON.stringify({
-      collection: process.env.MONGODB_COLLECTION_NAME,
-      database: process.env.MONGODB_DB_NAME,
-      dataSource: "Cluster0",
-      filter: {
-        firstTradeTimestamp: { $gte: firstTradeTimestamp },
-      },
-      limit: batchSize,
-      skip: page * batchSize,
-    })
-
-    try {
-      const response = await fetch(
-        "https://us-east-2.aws.data.mongodb-api.com/app/data-fnjyq/endpoint/data/v1/action/find",
-        {
-          next: { revalidate: 24 * 60 * 60 },
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "Access-Control-Request-Headers": "*",
-            "api-key":
-              "5KHg7ImnBlNQlXkGGbyyB4LFoN0g9hk4fxUdWJbyKdd1bxo3DDrr48YjCHQquWMG",
-          },
-          body: data,
-        }
-      )
-
-      const responseData = await response.json()
-      console.log(responseData.documents.length, "data historical api")
-
-      if (responseData.documents.length === 0) {
-        break // break out of loop if no more data
-      }
-
-      allData.push(...(responseData.documents as unknown as Batch[]))
-      page++
-    } catch (error) {
-      console.log(error)
-      break
-    }
-  }
-
-  return allData
-}
-
 
 export default async function DashboardPage() {
   let data: any = getApiDataLastWeek()

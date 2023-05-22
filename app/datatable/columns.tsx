@@ -136,15 +136,19 @@ export const columns: ColumnDef<Batch>[] = [
     accessorKey: "trades",
     header: "Tokens In",
     cell: ({ row }) => {
-      const tokens = row.original.trades.map((trade) => {
+      const tokens = new Set<string>()
+      row.original.trades.forEach((trade) => {
         if (
           trade.sellToken.address.toLowerCase() ==
           "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE".toLowerCase()
-        )
-          return "ETH"
-        else return trade.sellToken.symbol
+        ) {
+          tokens.add("ETH")
+        } else {
+          tokens.add(trade.sellToken.symbol)
+        }
       })
-      return <div>{tokens.join(", ")}</div>
+
+      return <div>{Array.from(tokens).join(", ")}</div>
     },
   },
   {
@@ -152,29 +156,50 @@ export const columns: ColumnDef<Batch>[] = [
     header: "Tokens Out",
     cell: ({ row }) => {
       // if buyToken.address is 0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE in low cap, then it is ETH
-      const tokens = row.original.trades.map((trade) => {
+      const tokens = new Set<string>()
+      row.original.trades.forEach((trade) => {
         if (
           trade.buyToken.address.toLowerCase() ==
           "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE".toLowerCase()
-        )
-          return "ETH"
-        else return trade.buyToken.symbol
+        ) {
+          tokens.add("ETH")
+        } else {
+          tokens.add(trade.buyToken.symbol)
+        }
       })
 
-      return <div>{tokens.join(", ")}</div>
+      return <div>{Array.from(tokens).join(", ")}</div>
     },
   },
   {
     accessorKey: "trades",
-    header: () => <div className="text-right font-medium">Trades</div>,
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+          <div className="text-right font-medium">Trades</div>
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>)
+    },
     cell: ({ row }) => {
       const num_trades = row.original.trades.length
-      return <div className="text-right font-medium">{num_trades}</div>
+      return <div className="text-right font-medium" >{num_trades}</div >
     },
+
   },
   {
     accessorKey: "trades",
-    header: () => <div className="text-right">Batch Value</div>,
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+          <div className="text-right">Batch Value</div>
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+
+        </Button>)
+    },
     cell: ({ row }) => {
       const batchValue = row.original.trades.reduce(
         (total, trade) =>
@@ -194,7 +219,16 @@ export const columns: ColumnDef<Batch>[] = [
   },
   {
     accessorKey: "cowiness",
-    header: () => <div className="text-right">Cowiness %</div>,
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+          <div className="text-right">CoW %</div>
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+
+        </Button>)
+    },
     cell: ({ row }) => {
       const cowiness = Number(row.original.cowiness) * 100
       const formatted = cowiness.toFixed(2)

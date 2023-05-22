@@ -13,9 +13,12 @@ import {
   LucideMenu,
   Menu,
   MenuIcon,
+  Moon,
+  Sun,
   Twitter,
 } from "lucide-react"
 import { FaBars, FaIcons } from "react-icons/fa"
+import { useTheme } from "next-themes"
 
 import { siteConfig } from "@/config/site"
 import { cn } from "@/lib/utils"
@@ -25,6 +28,7 @@ import {
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuShortcut,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { ModeToggle } from "@/components/ui/mode-toggle"
@@ -36,6 +40,12 @@ export function UserNav({
   className,
   ...props
 }: React.HTMLAttributes<HTMLElement>) {
+  const { theme, setTheme } = useTheme()
+
+  const toggleTheme = () => {
+    setTheme(theme === "light" ? "dark" : "light")
+  }
+
   return (
     <div className={cn("", className)}>
       <div className="lg:hidden">
@@ -51,21 +61,49 @@ export function UserNav({
           <DropdownMenuContent className="w-56" align="end" forceMount>
             <DropdownMenuGroup>
               <DropdownMenuItem>
-                <LayoutGrid className="mr-2 h-4 w-4" />
-                <span>Overview</span>
+                <Link
+                  href="/"
+                  target="_blank"
+                  className="flex items-center"
+                >
+                  <LayoutGrid className="mr-2 h-4 w-4" />
+                  <span>Overview</span>
+                </Link>
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <Files className="mr-2 h-4 w-4" />
-                <span>Docs</span>
+                <Link
+                  href="https://api.cowtools.info"
+                  target="_blank"
+                  className="flex items-center"
+                >
+                  <Files className="mr-2 h-4 w-4" />
+                  <span>Docs</span></Link>
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <Github className="mr-2 h-4 w-4" />
-                <span>Github</span>
-                <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
+                <Link
+                  href="https://github.com/function03-labs/CowSwap-CoWiness"
+                  target="_blank"
+                  className="flex items-center"
+                >
+                  <Github className="mr-2 h-4 w-4" />
+                  <span>Github</span>
+                </Link>
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <Twitter className="mr-2 h-4 w-4" />
-                <span>Twitter</span>
+                <Link
+                  href="https://twitter.com/CoWSwap"
+                  target="_blank"
+                  className="flex items-center"
+                >
+                  <Twitter className="mr-2 h-4 w-4" />
+                  <span>Twitter</span>
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              {/* Change theme */}
+              <DropdownMenuItem onClick={toggleTheme}>
+                {theme === "light" ? <Moon className="mr-2 h-4 w-4" /> : <Sun className="mr-2 h-4 w-4" />}
+                {theme === "light" ? "Dark" : "Light"} Mode
               </DropdownMenuItem>
             </DropdownMenuGroup>
           </DropdownMenuContent>
