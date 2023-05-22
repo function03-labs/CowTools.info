@@ -41,10 +41,10 @@ export function UserNav({
       <div className="lg:hidden">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant={"link"} className="relative h-6 w-6 flex">
+            <Button variant={"link"} className="relative flex h-6 w-6">
               {/* <LucideMenu className="h-8 w-8" /> */}
               <Avatar>
-                <Menu className="h-full w-full relative" />
+                <Menu className="relative h-full w-full" />
               </Avatar>
             </Button>
           </DropdownMenuTrigger>

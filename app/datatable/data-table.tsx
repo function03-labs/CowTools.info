@@ -109,7 +109,7 @@ export function DataTable<TData, TValue>({
                 return (
 
                   <TableRow
-                    key={row.original._id}
+                    key={(row.original as { _id: string })._id!}
                     data-state={row.getIsSelected() && "selected"}
                   >
 

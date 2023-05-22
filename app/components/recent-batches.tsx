@@ -23,9 +23,9 @@ export function RecentBatches({ data }: { data: Batch[] }) {
   return (
     <>
       <div className="mb-4 grid grid-cols-10 items-center  text-sm font-medium text-muted-foreground">
-        <div className="grow col-span-6">Batch ID</div>
-        <div className="ml-4 shrink-0 col-span-2 text-right">Value</div>
-        <div className="ml-4 shrink-0 col-span-2 text-right">CoW %</div>
+        <div className="col-span-6 grow">Batch ID</div>
+        <div className="col-span-2 ml-4 shrink-0 text-right">Value</div>
+        <div className="col-span-2 ml-4 shrink-0 text-right">CoW %</div>
       </div>
       <div className="space-y-8">
         {topBatches.map((batch) => (

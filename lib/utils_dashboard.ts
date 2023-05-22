@@ -1,4 +1,4 @@
-import { Trade } from "@/app/dashboard/datatable/columns"
+import { Trade } from "@/app/datatable/columns"
 
 export function computeBatchVolume(trades: Trade[]): number {
   let batchVolume = 0

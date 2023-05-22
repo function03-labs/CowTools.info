@@ -25,7 +25,7 @@ export function Search() {
         <Input
           type="search"
           placeholder="Search by batch tx hash..."
-          className="h-9 w-[100%] md:max-w-[60vw] md:w-[40vw] lg:max-w-[60vw] lg:[40vw]"
+          className="lg:[40vw] h-9 w-[100%] md:w-[40vw] md:max-w-[60vw] lg:max-w-[60vw]"
           onChange={handleChange}
           value={tx}
         />
