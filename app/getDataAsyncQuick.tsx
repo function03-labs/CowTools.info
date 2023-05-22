@@ -20,6 +20,7 @@ export async function getDataAsyncQuick(): Promise<Batch[]> {
       sort: {
         firstTradeTimestamp: -1,
       },
+      limit: 4000,
 
     });
     //make a call to this api and send lastweek data post
@@ -33,7 +34,7 @@ export async function getDataAsyncQuick(): Promise<Batch[]> {
         headers: {
           "Content-Type": "application/json",
           "Access-Control-Request-Headers": "*",
-          "api-key": "5KHg7ImnBlNQlXkGGbyyB4LFoN0g9hk4fxUdWJbyKdd1bxo3DDrr48YjCHQquWMG",
+          "api-key": "BVoQG8gP315yFGK3Jnr73DLU4HPj7bIC6fUo9eqbhrNMtDuaKu5dWLppRG9i7Mer",
         },
 
         body: JSON.stringify({
@@ -51,7 +52,7 @@ export async function getDataAsyncQuick(): Promise<Batch[]> {
           headers: {
             "Content-Type": "application/json",
             "Access-Control-Request-Headers": "*",
-            "api-key": "6467f01b618d5eb56ed9a8c6",
+            "api-key": "BVoQG8gP315yFGK3Jnr73DLU4HPj7bIC6fUo9eqbhrNMtDuaKu5dWLppRG9i7Mer",
           },
           body: data,
         }

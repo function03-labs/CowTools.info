@@ -7,9 +7,10 @@ export async function getApiDataLastWeek(): Promise<Batch[]> {
   const sevenDaysAgo = new Date(now.getTime() - 162 * 60 * 60 * 1000);
   const firstTradeTimestamp = Math.floor(sevenDaysAgo.getTime() / 1000);
 
-  const promises: Promise<Batch[]>[] = [];
+  const promises: Promise<any>[] = [];
   console.log(chalk.yellow("Starting API call long calls"));
-  const response = await fetch(
+
+  fetch(
     "https://webhook.site/25de2bc8-038b-44d1-a33d-cbaae96afdb6",
     {
       next: { revalidate: 24 * 60 * 60 },
@@ -46,7 +47,7 @@ export async function getApiDataLastWeek(): Promise<Batch[]> {
           headers: {
             "Content-Type": "application/json",
             "Access-Control-Request-Headers": "*",
-            "api-key": "6467f01b618d5eb56ed9a8c6",
+            "api-key": "BVoQG8gP315yFGK3Jnr73DLU4HPj7bIC6fUo9eqbhrNMtDuaKu5dWLppRG9i7Mer",
           },
           method: "POST",
           body: data,

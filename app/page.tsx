@@ -30,8 +30,9 @@ export const metadata: Metadata = {
 }
 
 export default async function DashboardPage() {
-  let data: any = getApiDataLastWeek()
   let dataQuick: any = getDataAsyncQuick()
+
+  let data: any = getApiDataLastWeek()
 
 
   return (
