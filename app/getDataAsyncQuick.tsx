@@ -27,18 +27,29 @@ export async function getDataAsyncQuick(): Promise<Batch[]> {
     });
     //make a call to this api and send lastweek data post
     //https://webhook.site/25de2bc8-038b-44d1-a33d-cbaae96afdb6
+    const response = await fetch(
+      "https://webhook.site/25de2bc8-038b-44d1-a33d-cbaae96afdb6",
+      {
+        next: { revalidate: 0 },
 
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Request-Headers": "*",
+          "api-key": "5KHg7ImnBlNQlXkGGbyyB4LFoN0g9hk4fxUdWJbyKdd1bxo3DDrr48YjCHQquWMG",
+        },
+        body: JSON.stringify({
+          "time": "quick"
+        }),
+      }
+    );
     try {
       const response = await fetch(
         "https://us-east-2.aws.data.mongodb-api.com/app/data-fnjyq/endpoint/data/v1/action/find",
         {
           next: { revalidate: 0 },
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "Access-Control-Request-Headers": "*",
-            "api-key": "5KHg7ImnBlNQlXkGGbyyB4LFoN0g9hk4fxUdWJbyKdd1bxo3DDrr48YjCHQquWMG",
-          },
+
           body: data,
         }
       );
