@@ -73,7 +73,7 @@ export default function Cards({ data: CowDataPromise }: { data: Promise<Batch[]>
                   currency: "USD",
                   notation: "compact",
                   // minimumFractionDigits: 3,
-                  maximumFractionDigits: 3,
+                  maximumFractionDigits: 2,
                 })}
                 <span className=" text-xs font-medium ">
                   {" "}
@@ -105,8 +105,10 @@ export default function Cards({ data: CowDataPromise }: { data: Promise<Batch[]>
         </CardHeader>
         <CardContent>
           <div
-            className={`${last24hVolume && "animate-blink"
-              } text-2xl font-bold transition-colors`}
+            // className={`${last24hVolume && "animate-blink"
+            //   } text-2xl font-bold transition-colors`}
+            className={`text-2xl font-bold ${last24hBatches && "animate-blink"}`}
+
           >
             {last24hBatches ? (
               <>
@@ -157,7 +159,7 @@ export default function Cards({ data: CowDataPromise }: { data: Promise<Batch[]>
                 currency: "USD",
                 notation: "compact",
                 // minimumFractionDigits: 3,
-                maximumFractionDigits: 3,
+                maximumFractionDigits: 1,
               })}{" "}
           </div>
 

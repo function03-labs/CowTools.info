@@ -1,9 +1,9 @@
 export type SiteConfig = typeof siteConfig
 
 export const siteConfig = {
-  name: "Cowswap",
+  name: "CowTools",
   description:
-    "CoWiness dashboard to compute CoWs in batch auctions happening in Cowswap protocol",
+    "CowTools Dashboard to compute Coincidence of Wants in batch auctions",
   mainNav: [
     {
       title: "Home",

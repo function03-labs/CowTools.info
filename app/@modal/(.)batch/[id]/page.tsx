@@ -22,7 +22,7 @@ import {
   ToggleItem,
 } from "@tremor/react"
 
-import { useSettlement } from "@/hooks/hooks"
+import { useCowiness, useSettlement } from "@/hooks/hooks"
 import {
   Dialog,
   DialogContent,
@@ -31,69 +31,13 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
-import { Skeleton } from "@/components/ui/skeleton"
-
-interface StockData {
-  name: string
-  value: number
-  performance: string
-  deltaType: DeltaType
-}
-
-const stocks: StockData[] = [
-  {
-    name: "Off Running AG",
-    value: 10456,
-    performance: "6.1%",
-    deltaType: "increase",
-  },
-  {
-    name: "Not Normal Inc.",
-    value: 5789,
-    performance: "1.2%",
-    deltaType: "moderateDecrease",
-  },
-  {
-    name: "Logibling Inc.",
-    value: 4367,
-    performance: "2.3%",
-    deltaType: "moderateIncrease",
-  },
-  {
-    name: "Raindrop Inc.",
-    value: 3421,
-    performance: "0.5%",
-    deltaType: "moderateDecrease",
-  },
-  {
-    name: "Mwatch Group",
-    value: 1432,
-    performance: "3.4%",
-    deltaType: "decrease",
-  },
-]
+import Skeleton from "react-loading-skeleton"
+import Link from "next/link"
 
 const valueFormatter = (number: number) =>
   `$ ${Intl.NumberFormat("us").format(number).toString()}`
 
-const categories = [
-  {
-    title: "Sales",
-    metric: "$ 456,000",
-  },
-  {
-    title: "Transactions",
-    metric: "89,123",
-  },
-  {
-    title: "Merchants",
-    metric: "22",
-  },
-  {
-    title: "Orders",
-    metric: "678",
-  },
-]
+
 type BuyAsset = {
   name: string
   value: number
@@ -113,15 +57,15 @@ export default function BatchModal({
     isLoading: settlementIsLoading,
     isError: settlementIsError,
   } = useSettlement(batchId)
-  const [selectedView, setSelectedView] = useState("chart")
+
+  const {
+    data: cowinessData,
+    isLoading: cowinessIsLoading,
+    isError: cowinessIsError,
+  } = useCowiness(batchId)
+
+
   const settlement: any = settlementData
-  console.log(
-    "data ready: ",
-    settlement,
-    batchId,
-    "ios loading ",
-    settlementIsLoading
-  )
 
   const buyAssets: { [symbol: string]: BuyAsset } | undefined =
     settlement?.trades.reduce((acc, trade) => {
@@ -146,15 +90,15 @@ export default function BatchModal({
     ...asset,
     value: asset.value,
   }))
-  console.log("buy stock are ", buyStocks)
 
   return (
     <Dialog defaultOpen={true}>
       <DialogContent className="m-0 p-0">
         <Card
-          className=" mx-auto"
+          className="mx-auto ring-opacity-0 dark:bg-black dark:ring-slate-500 "
           style={{
             maxWidth: "100%",
+
             overflow: "hidden",
             textOverflow: "ellipsis",
             whiteSpace: "nowrap",
@@ -166,8 +110,8 @@ export default function BatchModal({
             alignItems="center"
           >
             <div className=" overflow-hidden">
-              <Title>Batch ID:</Title>
-              <Text className="overflow-hidden text-ellipsis">{batchId}</Text>
+              <Title className=" dark:!text-inherit">Batch ID:</Title>
+              <Text className="overflow-hidden text-ellipsis ">{batchId}</Text>
             </div>
             {/* <Toggle
               defaultValue="chart"
@@ -183,7 +127,7 @@ export default function BatchModal({
               <Text className="mt-8 overflow-hidden text-ellipsis">
                 Batch value
               </Text>
-              <Metric>
+              <Metric className=" dark:!text-inherit ">
                 {settlementData.trades
                   .reduce(
                     (acc: number, trade: any) =>
@@ -199,87 +143,71 @@ export default function BatchModal({
                     currency: "USD",
                   })}
               </Metric>
-              <Divider />
+              <Divider className=" dark:bg-slate-600" />
 
-              {selectedView === "chart" ? (
-                <>
-                  <Text className="mt-8">
-                    <Bold>Asset Inputs</Bold>
+
+
+              <Text className="mt-8">
+                <Bold className=" dark:!text-inherit">Asset Inputs</Bold>
+              </Text>
+              <Text className=" dark:!text-inherit">{buyStocks.map((order) => order.name).join(", ")}</Text>
+              <DonutChart
+                data={buyStocks}
+                showAnimation={false}
+                showTooltip={true}
+                category="value"
+                index="name"
+                valueFormatter={valueFormatter}
+                className="mt-6 dark:!text-inherit"
+              />
+              <Text className="mt-8"></Text>
+              <Card className=" !border-transparent dark:bg-transparent dark:ring-slate-600">
+                <Flex>
+                  <Text className="truncate  dark:!text-inherit">
+                    <Bold>CoWiness Score</Bold>
                   </Text>
-                  <Text>{buyStocks.map((order) => order.name).join(", ")}</Text>
-                  <DonutChart
-                    data={buyStocks}
-                    showAnimation={false}
-                    showTooltip={true}
-                    category="value"
-                    index="name"
-                    valueFormatter={valueFormatter}
-                    className="mt-6"
-                  />
-                  <Text className="mt-8"></Text>
-                  <Card className=" !border-transparent">
-                    <Flex>
-                      <Text className="truncate">
-                        <Bold>CoWiness Score</Bold>
-                      </Text>
-                      <Text>
-                        <Bold>62%</Bold>
-                      </Text>
-                    </Flex>
-
-                    <CategoryBar
-                      categoryPercentageValues={[10, 25, 45, 20]}
-                      colors={["emerald", "yellow", "orange", "red"]}
-                      percentageValue={65}
-                      tooltip="65%"
-                      className="mt-2"
-                    />
-                  </Card>
-                </>
-              ) : (
-                <>
-                  <Flex className="mt-8" justifyContent="between">
-                    <Text className="truncate">
-                      <Bold>Stocks</Bold>
+                  {(cowinessIsLoading || cowinessData === undefined) ? (
+                    <Skeleton />
+                  ) : (
+                    <Text className=" dark:!text-inherit">
+                      <Bold>{cowinessData}%</Bold>
                     </Text>
-                    <Text>Since transaction</Text>
-                  </Flex>
-                  <List className="mt-4">
-                    {stocks.map((stock) => (
-                      <ListItem key={stock.name}>
-                        <Text>{stock.name}</Text>
-                        <Flex justifyContent="end" className="space-x-2">
-                          <Text>
-                            ${" "}
-                            {Intl.NumberFormat("us")
-                              .format(stock.value)
-                              .toString()}
-                          </Text>
-                          <BadgeDelta deltaType={stock.deltaType} size="xs">
-                            {stock.performance}
-                          </BadgeDelta>
-                        </Flex>
-                      </ListItem>
-                    ))}
-                  </List>
-                  ∏
-                </>
-              )}
+                  )}
+                </Flex>
+
+                {cowinessIsLoading && cowinessData === undefined ? (
+                  <Skeleton />
+                ) : (
+                  <CategoryBar
+                    categoryPercentageValues={[10, 25, 45, 20]}
+                    colors={["red", "orange", "yellow", "emerald"]}
+                    percentageValue={cowinessData}
+                    tooltip={`${cowinessData}%`}
+                    className="mt-2"
+                  />
+                )}
+              </Card>
+
               <Flex className="mt-6 border-t pt-4">
-                <Button
-                  size="xs"
-                  variant="light"
-                  icon={ArrowNarrowRightIcon}
-                  iconPosition="right"
-                >
-                  View more
-                </Button>
+                <Link href={`https://explorer.cow.fi/tx/${batchId}`}
+                  target="_blank">
+
+                  <Button
+                    size="xs"
+                    variant="light"
+                    icon={ArrowNarrowRightIcon}
+                    iconPosition="right"
+
+                  >
+                    View more
+                  </Button>
+                </Link>
               </Flex>
             </>
           ) : (
             <div
               role="status"
-              className="mt-6 max-w-lg animate-pulse space-y-4 divide-y divide-gray-200 rounded border border-gray-200 p-4 shadow dark:divide-gray-700 dark:border-gray-700 md:p-6"
+              className="mt-6 w-full animate-pulse space-y-4 divide-y divide-gray-200 rounded border border-gray-200 p-4 shadow dark:divide-gray-700 dark:border-gray-700 md:p-6"
             >
               <div className="flex items-center justify-between">
                 <div>
@@ -320,7 +248,9 @@ export default function BatchModal({
             </div>
           )}
         </Card>
-      </DialogContent>
-    </Dialog>
+
+      </DialogContent >
+    </Dialog >
   )
 }
+

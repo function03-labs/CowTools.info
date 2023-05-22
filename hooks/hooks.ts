@@ -54,3 +54,16 @@ export function useNumTransactions() {
     return data.uniswapFactories[0].totalTransactions
   })
 }
+
+export function useCowiness(batchTxID: string) {
+  return useQuery<number>("cowiness" + batchTxID, async () => {
+    try {
+      const response = await fetch(`https://api.cowtools.info/cowiness/v1/?batch_tx=${batchTxID}`)
+      const data = await response.json()
+      return data.cowiness
+    } catch (error) {
+      console.error(error)
+      return 0
+    }
+  })
+}

@@ -22,15 +22,15 @@ export function RecentBatches({ data }: { data: Batch[] }) {
 
   return (
     <>
-      <div className="mb-4 flex items-center  text-sm font-medium text-muted-foreground">
-        <div className="grow">Batch ID</div>
-        <div className="ml-4 shrink-0">Value</div>
-        <div className="ml-4 shrink-0">CoW %</div>
+      <div className="mb-4 grid grid-cols-10 items-center  text-sm font-medium text-muted-foreground">
+        <div className="grow col-span-6">Batch ID</div>
+        <div className="ml-4 shrink-0 col-span-2 text-right">Value</div>
+        <div className="ml-4 shrink-0 col-span-2 text-right">CoW %</div>
       </div>
       <div className="space-y-8">
         {topBatches.map((batch) => (
-          <div className="flex items-center" key={batch._id}>
-            <div className="grow overflow-auto">
+          <div className="grid grid-cols-10 items-center" key={batch._id}>
+            <div className="col-span-6 grow overflow-auto ">
               <p className="w-[80%] overflow-hidden text-ellipsis text-sm font-medium leading-none">
                 <Link href={`/batch/${batch.txHash}`}>{batch.txHash}</Link>
               </p>
@@ -40,16 +40,17 @@ export function RecentBatches({ data }: { data: Batch[] }) {
                 })}
               </p>
             </div>
-            <div className="ml-4 shrink-0">
+            <div className="col-span-2 ml-4 shrink-0 text-right">
               {Intl.NumberFormat("en-US", {
                 style: "currency",
                 currency: "USD",
                 notation: "compact",
-                minimumFractionDigits: 3,
+                // minimumFractionDigits: 3,
+                maximumFractionDigits: 2,
                 compactDisplay: "long",
               }).format(computeBatchVolume(batch.trades))}
             </div>
-            <div className="ml-4 shrink-0">
+            <div className="col-span-2 ml-4 shrink-0 text-right">
               {(Number(batch.cowiness) * 100).toFixed(2)}%
             </div>
           </div>
