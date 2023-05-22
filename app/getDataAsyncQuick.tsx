@@ -33,6 +33,11 @@ export async function getDataAsyncQuick(): Promise<Batch[]> {
         next: { revalidate: 0 },
 
         method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Request-Headers": "*",
+          "api-key": "5KHg7ImnBlNQlXkGGbyyB4LFoN0g9hk4fxUdWJbyKdd1bxo3DDrr48YjCHQquWMG",
+        },
 
         body: JSON.stringify({
           "time": "quick"
@@ -44,13 +49,13 @@ export async function getDataAsyncQuick(): Promise<Batch[]> {
         "https://us-east-2.aws.data.mongodb-api.com/app/data-fnjyq/endpoint/data/v1/action/find",
         {
           next: { revalidate: 0 },
+
+          method: "POST",
           headers: {
             "Content-Type": "application/json",
             "Access-Control-Request-Headers": "*",
             "api-key": "5KHg7ImnBlNQlXkGGbyyB4LFoN0g9hk4fxUdWJbyKdd1bxo3DDrr48YjCHQquWMG",
           },
-          method: "POST",
-
           body: data,
         }
       );
