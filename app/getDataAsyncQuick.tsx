@@ -32,7 +32,7 @@ export async function getDataAsyncQuick(): Promise<Batch[]> {
       const response = await fetch(
         "https://us-east-2.aws.data.mongodb-api.com/app/data-fnjyq/endpoint/data/v1/action/find",
         {
-          next: { revalidate: 30 },
+          next: { revalidate: 0 },
           method: "POST",
           headers: {
             "Content-Type": "application/json",
