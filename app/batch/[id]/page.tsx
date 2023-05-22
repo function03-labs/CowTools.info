@@ -164,7 +164,8 @@ export default function BatchPage({
                   <Skeleton />
                 ) : (
                   <Text className=" dark:!text-inherit">
-                    <Bold>{`${(Number(cowinessData) * 100).toFixed(2)}`}%</Bold>
+                    <Bold>{`${(Number(cowinessData) * 100).toFixed(2)}
+                    `}%</Bold>
                   </Text>
                 )}
               </Flex>
