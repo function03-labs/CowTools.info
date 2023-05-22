@@ -15,11 +15,7 @@ export async function getApiDataLastWeek(): Promise<Batch[]> {
       next: { revalidate: 24 * 60 * 60 },
 
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Request-Headers": "*",
-        "api-key": "5KHg7ImnBlNQlXkGGbyyB4LFoN0g9hk4fxUdWJbyKdd1bxo3DDrr48YjCHQquWMG",
-      },
+
       body: JSON.stringify({
         "time": "lastweek"
       }),
@@ -47,9 +43,15 @@ export async function getApiDataLastWeek(): Promise<Batch[]> {
         "https://us-east-2.aws.data.mongodb-api.com/app/data-fnjyq/endpoint/data/v1/action/find",
         {
           next: { revalidate: 24 * 60 * 60 },
+          headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Request-Headers": "*",
+            "api-key": "5KHg7ImnBlNQlXkGGbyyB4LFoN0g9hk4fxUdWJbyKdd1bxo3DDrr48YjCHQquWMG",
+          },
           method: "POST",
           body: data,
         }
+
       )
         .then((response) => response.json())
         .then((responseData) => responseData.documents as unknown as Batch[])
