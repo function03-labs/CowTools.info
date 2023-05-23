@@ -23,6 +23,7 @@ import { columns } from "./datatable/columns"
 import { DataTable } from "./datatable/data-table"
 import { getDataAsyncQuick } from "./getDataAsyncQuick";
 import { getApiDataLastWeek } from "./getApiDataLastWeek";
+export const revalidate = 86400
 
 export const metadata: Metadata = {
   title: "Dashboard",

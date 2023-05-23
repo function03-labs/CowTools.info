@@ -7,7 +7,6 @@ import { fontSans } from "@/lib/fonts"
 import { cn } from "@/lib/utils"
 import { ThemeProvider } from "@/components/theme-provider"
 import Providers from "./providers/provider"
-
 export const metadata: Metadata = {
   title: {
     default: siteConfig.name,
@@ -31,6 +30,7 @@ interface RootLayoutProps {
 }
 
 export default function RootLayout({ children, modal }: RootLayoutProps) {
+
   return (
     <>
       <html lang="en" suppressHydrationWarning>
@@ -44,6 +44,7 @@ export default function RootLayout({ children, modal }: RootLayoutProps) {
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             {/* <SiteHeader /> */}
             <Providers>
+
               {children}
               {modal}
 
