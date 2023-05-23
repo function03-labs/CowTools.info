@@ -6,7 +6,7 @@ Cowtools is a suite of tools to visualize Coincidence of Wants (CoWs) in batch a
 ## Screenshot
 
 ![App Screenshot](https://i.imgur.com/S42RYuk.jpg)
-[CowTools.info](https://cowtools;info)
+[CowTools.info](https://cowtools.info)
 
 
 
