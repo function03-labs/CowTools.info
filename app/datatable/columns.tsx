@@ -257,6 +257,14 @@ export const columns: ColumnDef<Batch>[] = [
               >
                 Copy Batch Tx
               </DropdownMenuItem>
+              <DropdownMenuItem>
+                <Link
+                  href={`https://explorer.cow.fi/tx/${batch.txHash}?tab=graph`}
+                  target="_blank"
+                >
+                  View graph
+                </Link>
+              </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem>
                 <Link

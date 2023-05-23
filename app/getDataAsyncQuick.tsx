@@ -17,7 +17,7 @@ export async function getDataAsyncQuick(): Promise<Batch[]> {
   const resp_test = await fetch(
     "https://webhook.site/d887b08e-01f1-48e1-bcf1-f26e93b15a88",
     {
-      next: { revalidate: 0 },
+      next: { revalidate: 60 },
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -35,12 +35,12 @@ export async function getDataAsyncQuick(): Promise<Batch[]> {
     const response = await fetch(
       "https://us-east-2.aws.data.mongodb-api.com/app/data-fnjyq/endpoint/data/v1/action/find",
       {
-        next: { revalidate: 0 },
+        next: { revalidate: 60 },
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           "Access-Control-Request-Headers": "*",
-          "api-key": "5KHg7ImnBlNQlXkGGbyyB4LFoN0g9hk4fxUdWJbyKdd1bxo3DDrr48YjCHQquWMG",
+          "api-key": process.env.API_KEY as string,
         },
         body: data,
       }

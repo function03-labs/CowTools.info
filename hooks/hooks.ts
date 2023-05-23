@@ -27,7 +27,6 @@ export function useHistoricalVol() {
     "historicalVol",
     async () => {
       const data: any = await graphQLClient.request(HISTORICAL_VOL)
-      console.log("data is", data)
       return data.dailyTotals
     },
     { refetchOnWindowFocus: false }

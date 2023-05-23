@@ -60,6 +60,19 @@ function formatCows(cowData: Batch[]) {
 
   return cowDataList
 }
+
+const tooltipFormatter = (value, name, props) => {
+  if (name === "Trades") {
+    return value
+  } else {
+    return Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "USD",
+      notation: "compact",
+      compactDisplay: "long",
+    }).format(value)
+  }
+}
 function formatData(historicalVolData) {
   // console.log("historicalVolData: ", historicalVolData)
   const formattedData = historicalVolData?.map((item) => ({
@@ -160,7 +173,7 @@ export function Overview({ data: cowData }: { data: Batch[] }) {
               isAnimationActive={true}
             />
 
-            <Tooltip cursor={{ fill: "transparent" }} />
+            <Tooltip cursor={{ fill: "transparent" }} formatter={tooltipFormatter} />
             {/* Add legend top right and can click on it to hide bars */}
             <Legend
               verticalAlign="top"

@@ -55,6 +55,29 @@ export default function Cards({ data: CowDataPromise }: { data: Promise<Batch[]>
     ((last24hVolume - early24Volume) / early24Volume) * 100
   const percentageChangeBat =
     ((last24hBatches - early24hBatches) / early24hBatches) * 100
+
+  const last48hVolumeCow = CowData?.filter(
+    (batch) =>
+      batch.firstTradeTimestamp * 1000 >
+      new Date(new Date().getTime() - 48 * 60 * 60 * 1000).getTime()
+  ).reduce(
+    (acc, batch) =>
+      acc + Number(batch.cowiness) * computeBatchVolume(batch.trades),
+    0
+  );
+
+  const last24hVolumeCow = CowData?.filter(
+    (batch) =>
+      batch.firstTradeTimestamp * 1000 >
+      new Date(new Date().getTime() - 24 * 60 * 60 * 1000).getTime()
+  ).reduce(
+    (acc, batch) =>
+      acc + Number(batch.cowiness) * computeBatchVolume(batch.trades),
+    0
+  );
+
+  const percentageChangeVolCow =
+    ((last24hVolumeCow! - last48hVolumeCow!) / last48hVolumeCow!) * 100;
   return (
     <div className="grid grid-cols-2 gap-4 md:grid-cols-2 lg:grid-cols-4">
       <Card>
@@ -161,6 +184,16 @@ export default function Cards({ data: CowDataPromise }: { data: Promise<Batch[]>
                 // minimumFractionDigits: 3,
                 maximumFractionDigits: 1,
               })}{" "}
+            <span className=" text-xs font-medium ">
+              <span
+                className={
+                  percentageChangeVol >= 0 ? "text-green-600" : "text-red-600"
+                }
+              >
+                {percentageChangeVol >= 0 ? "+" : "-"}
+                {Math.abs(percentageChangeVol).toFixed(2)}%
+              </span>
+            </span>
           </div>
 
           <p className="hidden text-xs text-muted-foreground sm:block">
@@ -194,6 +227,6 @@ export default function Cards({ data: CowDataPromise }: { data: Promise<Batch[]>
                   </p> */}
         </CardContent>
       </Card>
-    </div>
+    </div >
   )
 }

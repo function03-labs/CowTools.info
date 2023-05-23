@@ -91,7 +91,7 @@ export default function BatchPage({
       <Navbar />
       <Card
         // eslint-disable-next-line tailwindcss/migration-from-tailwind-2
-        className="mx-auto !ring-opacity-0 dark:bg-black dark:ring-slate-500 md:my-10 md:max-w-lg md:ring-opacity-100 lg:max-w-2xl xl:max-w-4xl"
+        className="mx-auto !ring-opacity-0 dark:bg-black dark:!ring-slate-500 md:my-10 md:max-w-lg md:ring-gray-300 md:ring-opacity-100 lg:max-w-2xl xl:max-w-4xl"
         style={{
           overflow: "hidden",
           textOverflow: "ellipsis",
@@ -195,6 +195,18 @@ export default function BatchPage({
 
                 >
                   View more
+                </Button>
+              </Link>
+              <Link href={`https://explorer.cow.fi/tx/${batchId}?tab=graph`}
+                target="_blank">
+
+                <Button
+                  size="xs"
+                  variant="light"
+
+
+                >
+                  View graph
                 </Button>
               </Link>
             </Flex>

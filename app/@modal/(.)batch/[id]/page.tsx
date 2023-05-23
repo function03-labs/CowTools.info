@@ -201,7 +201,19 @@ export default function BatchModal({
                   >
                     View more
                   </Button>
+                </Link><Link href={`https://explorer.cow.fi/tx/${batchId}?tab=graph`}
+                  target="_blank">
+
+                  <Button
+                    size="xs"
+                    variant="light"
+
+
+                  >
+                    View graph
+                  </Button>
                 </Link>
+
               </Flex>
             </>
           ) : (

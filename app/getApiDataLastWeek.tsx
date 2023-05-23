@@ -39,7 +39,7 @@ export async function getApiDataLastWeek(): Promise<Batch[]> {
         headers: {
           "Content-Type": "application/json",
           "Access-Control-Request-Headers": "*",
-          "api-key": "5KHg7ImnBlNQlXkGGbyyB4LFoN0g9hk4fxUdWJbyKdd1bxo3DDrr48YjCHQquWMG",
+          "api-key": process.env.API_KEY as string,
         },
         body: data,
       }
