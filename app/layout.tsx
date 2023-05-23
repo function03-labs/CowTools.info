@@ -44,7 +44,8 @@ export default function RootLayout({ children, modal }: RootLayoutProps) {
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             {/* <SiteHeader /> */}
             <Providers>
-              {children}{modal}
+              {children}
+              {modal}
 
             </Providers>
             <Analytics />
