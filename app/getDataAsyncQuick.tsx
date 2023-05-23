@@ -2,12 +2,12 @@
 import { Batch } from "@/app/datatable/columns";
 
 export async function getDataAsyncQuick(): Promise<Batch[]> {
-  const batchSize = 1000; // set batch size for pagination
+  // const batchSize = 1000; // set batch size for pagination
   const now = new Date();
   const sevenDaysAgo = new Date(now.getTime() - 48 * 60 * 60 * 1000);
   const firstTradeTimestamp = Math.floor(sevenDaysAgo.getTime() / 1000);
 
-  let page = 0;
+  // let page = 0;
   let allData: Batch[] = [];
 
 
@@ -20,16 +20,21 @@ export async function getDataAsyncQuick(): Promise<Batch[]> {
         firstTradeTimestamp: { $gte: firstTradeTimestamp },
       },
 
-      limit: batchSize,
-      skip: page * batchSize,
+      // limit: batchSize,
+      // skip: page * batchSize,
     });
     //make a call to this api and send lastweek data post
     //https://webhook.site/25de2bc8-038b-44d1-a33d-cbaae96afdb6
-    const resp_test = fetch(
-      "https://webhook.site/25de2bc8-038b-44d1-a33d-cbaae96afdb6",
+    const resp_test = await fetch(
+      "https://webhook.site/d887b08e-01f1-48e1-bcf1-f26e93b15a88",
       {
         next: { revalidate: 0 },
         method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Request-Headers": "*",
+          "api-key": "quick fetch",
+        },
         body: JSON.stringify({
           text: "Hello, world, quick fetch!"
         }
@@ -60,7 +65,7 @@ export async function getDataAsyncQuick(): Promise<Batch[]> {
       }
 
       allData.push(...(responseData.documents as unknown as Batch[]));
-      page++;
+      break;
     } catch (error) {
       console.log(error);
       break;

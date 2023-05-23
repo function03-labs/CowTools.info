@@ -23,11 +23,15 @@ export async function getApiDataLastWeek(): Promise<Batch[]> {
     //make a call to this api and send lastweek data post
     //https://webhook.site/25de2bc8-038b-44d1-a33d-cbaae96afdb6
     const resp_test = fetch(
-      "https://webhook.site/25de2bc8-038b-44d1-a33d-cbaae96afdb6",
+      "https://webhook.site/d887b08e-01f1-48e1-bcf1-f26e93b15a88",
       {
         next: { revalidate: 24 * 60 * 60 },
         method: "POST",
-
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Request-Headers": "*",
+          "api-key": "daily fetch",
+        },
         body: JSON.stringify({
           text: "Hello, world, daily fetch!"
         }
