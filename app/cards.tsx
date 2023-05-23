@@ -166,34 +166,37 @@ export default function Cards({ data: CowDataPromise }: { data: Promise<Batch[]>
         </CardHeader>
         <CardContent>
           <div className="text-2xl font-bold">
-            {!CowData ? <Skeleton /> : CowData?.filter(
-              (batch) =>
-                batch.firstTradeTimestamp * 1000 >
-                new Date(new Date().getTime() - 24 * 60 * 60 * 1000).getTime()
-            )
-              .reduce(
-                (acc, batch) =>
-                  acc +
-                  Number(batch.cowiness) * computeBatchVolume(batch.trades),
-                0
+            {!CowData ? <Skeleton /> : <>
+
+              {CowData?.filter(
+                (batch) =>
+                  batch.firstTradeTimestamp * 1000 >
+                  new Date(new Date().getTime() - 24 * 60 * 60 * 1000).getTime()
               )
-              .toLocaleString("en-US", {
-                style: "currency",
-                currency: "USD",
-                notation: "compact",
-                // minimumFractionDigits: 3,
-                maximumFractionDigits: 1,
-              })}{" "}
-            <span className=" text-xs font-medium ">
-              <span
-                className={
-                  percentageChangeVol >= 0 ? "text-green-600" : "text-red-600"
-                }
-              >
-                {percentageChangeVol >= 0 ? "+" : "-"}
-                {Math.abs(percentageChangeVol).toFixed(2)}%
-              </span>
-            </span>
+                .reduce(
+                  (acc, batch) =>
+                    acc +
+                    Number(batch.cowiness) * computeBatchVolume(batch.trades),
+                  0
+                )
+                .toLocaleString("en-US", {
+                  style: "currency",
+                  currency: "USD",
+                  notation: "compact",
+                  // minimumFractionDigits: 3,
+                  maximumFractionDigits: 1,
+                })}
+              <span className=" text-xs font-medium ">
+                <span
+                  className={
+                    percentageChangeVolCow >= 0 ? "text-green-600" : "text-red-600"
+                  }
+                >
+                  {percentageChangeVolCow >= 0 ? "+" : "-"}
+                  {Math.abs(percentageChangeVolCow).toFixed(2)}%
+                </span>
+              </span></>}{" "}
+
           </div>
 
           <p className="hidden text-xs text-muted-foreground sm:block">
