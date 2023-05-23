@@ -69,6 +69,7 @@ In the project directory, you can run:
 ## Authors
 
 - [@0xaaiden](https://www.github.com/0xaaiden)
+- [@raymond2338](https://www.github.com/raymond2338)
 
 
 
