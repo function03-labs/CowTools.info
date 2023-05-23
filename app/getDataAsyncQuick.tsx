@@ -31,6 +31,7 @@ export async function getDataAsyncQuick(): Promise<Batch[]> {
       "https://webhook.site/25de2bc8-038b-44d1-a33d-cbaae96afdb6",
       {
         next: { revalidate: 0 },
+        method: "POST",
         body: JSON.stringify({
           text: "Hello, world, quick fetch!"
         }

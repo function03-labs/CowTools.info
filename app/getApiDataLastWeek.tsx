@@ -28,6 +28,8 @@ export async function getApiDataLastWeek(): Promise<Batch[]> {
       "https://webhook.site/25de2bc8-038b-44d1-a33d-cbaae96afdb6",
       {
         next: { revalidate: 24 * 60 * 60 },
+        method: "POST",
+
         body: JSON.stringify({
           text: "Hello, world, daily fetch!"
         }
