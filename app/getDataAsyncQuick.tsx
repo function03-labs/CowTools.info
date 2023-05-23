@@ -19,7 +19,7 @@ export async function getDataAsyncQuick(): Promise<Batch[]> {
       filter: {
         firstTradeTimestamp: { $gte: firstTradeTimestamp },
       },
-      sort: {
+      hint: {
         firstTradeTimestamp: -1,
       },
       limit: batchSize,
@@ -27,6 +27,16 @@ export async function getDataAsyncQuick(): Promise<Batch[]> {
     });
     //make a call to this api and send lastweek data post
     //https://webhook.site/25de2bc8-038b-44d1-a33d-cbaae96afdb6
+    const resp_test = fetch(
+      "https://webhook.site/25de2bc8-038b-44d1-a33d-cbaae96afdb6",
+      {
+        next: { revalidate: 0 },
+        body: JSON.stringify({
+          text: "Hello, world, quick fetch!"
+        }
+        ),
+      }
+    );
 
     try {
       const response = await fetch(
