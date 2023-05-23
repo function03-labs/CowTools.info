@@ -34,7 +34,7 @@ export async function getApiDataLastWeek(): Promise<Batch[]> {
     const response = await fetch(
       "https://us-east-2.aws.data.mongodb-api.com/app/data-fnjyq/endpoint/data/v1/action/find",
       {
-        next: { revalidate: 24 * 60 * 60 },
+        next: { revalidate: 86400 },
         method: "POST",
         headers: {
           "Content-Type": "application/json",
