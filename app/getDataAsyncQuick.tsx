@@ -14,28 +14,11 @@ export async function getDataAsyncQuick(): Promise<Batch[]> {
     },
     limit: 3000,
   });
-  const resp_test = await fetch(
-    "https://webhook.site/d887b08e-01f1-48e1-bcf1-f26e93b15a88",
-    {
-      next: { revalidate: 0 },
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Request-Headers": "*",
-        "api-key": "quick fetch",
-      },
-      body: JSON.stringify({
-        text: "Hello, world, quick fetch!"
-      }
-      ),
-    }
-  );
-
   try {
     const response = await fetch(
       "https://us-east-2.aws.data.mongodb-api.com/app/data-fnjyq/endpoint/data/v1/action/find",
       {
-        next: { revalidate: 0 },
+        cache: "no-store",
         method: "POST",
         headers: {
           "Content-Type": "application/json",

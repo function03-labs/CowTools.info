@@ -14,25 +14,10 @@ export async function getApiDataLastWeek(): Promise<Batch[]> {
     },
     limit: 8000,
   });
-  const resp_test = fetch(
-    "https://webhook.site/d887b08e-01f1-48e1-bcf1-f26e93b15a88",
-    {
-      next: { revalidate: 24 * 60 * 60 },
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Request-Headers": "*",
-        "api-key": "daily fetch",
-      },
-      body: JSON.stringify({
-        text: "Hello, world, daily fetch!"
-      }
-      ),
-    }
-  );
+
   try {
     const response = await fetch(
-      "https://us-east-2.aws.data.mongodb-api.com/app/data-fnjyq/endpoint/data/v1/action/find",
+      "https://us-east-2.aws.data.mongodb-api.com/app/data-fnjyq/endpoint/data/v1/action/find?t",
       {
         next: { revalidate: 86400 },
         method: "POST",
