@@ -17,9 +17,7 @@ export async function getApiDataLastWeek(): Promise<Batch[]> {
       filter: {
         firstTradeTimestamp: { $gte: firstTradeTimestamp },
       },
-      hint: {
-        firstTradeTimestamp: -1,
-      },
+
       limit: batchSize,
     });
     //make a call to this api and send lastweek data post

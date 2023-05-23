@@ -19,9 +19,7 @@ export async function getDataAsyncQuick(): Promise<Batch[]> {
       filter: {
         firstTradeTimestamp: { $gte: firstTradeTimestamp },
       },
-      hint: {
-        firstTradeTimestamp: -1,
-      },
+
       limit: batchSize,
       skip: page * batchSize,
     });
