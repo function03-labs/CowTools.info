@@ -21,6 +21,7 @@
     "@tremor/react": "^2.6.1",
     "@types/graphql": "^14.5.0",
     "@types/react-query": "^1.2.9",
+    "@vercel/analytics": "^1.0.1",
     "boring-avatars": "^1.7.0",
     "chalk": "^5.2.0",
     "class-variance-authority": "^0.4.0",

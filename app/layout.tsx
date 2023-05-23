@@ -1,5 +1,6 @@
 import "@/styles/globals.css"
 import { Metadata } from "next"
+import { Analytics } from '@vercel/analytics/react';
 
 import { siteConfig } from "@/config/site"
 import { fontSans } from "@/lib/fonts"
@@ -44,8 +45,9 @@ export default function RootLayout({ children, modal }: RootLayoutProps) {
             {/* <SiteHeader /> */}
             <Providers>
               {children}{modal}
-            </Providers>
 
+            </Providers>
+            <Analytics />
           </ThemeProvider>
         </body>
       </html>
