@@ -98,7 +98,7 @@ export default function Cards({ data: CowDataPromise }: { data: Promise<Batch[]>
                   // minimumFractionDigits: 3,
                   maximumFractionDigits: 2,
                 })}
-                <span className=" text-xs font-medium ">
+                <span className=" block text-xs  font-medium sm:inline ">
                   {" "}
                   <span
                     className={
@@ -136,7 +136,7 @@ export default function Cards({ data: CowDataPromise }: { data: Promise<Batch[]>
             {last24hBatches ? (
               <>
                 {last24hBatches}
-                <span className=" text-xs font-medium ">
+                <span className="  block text-xs  font-medium sm:inline ">
                   {" "}
                   <span
                     className={
@@ -165,7 +165,7 @@ export default function Cards({ data: CowDataPromise }: { data: Promise<Batch[]>
           <CardTitle className="text-sm font-medium">CoWiness Volume</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-bold">
+          <div className={`text-2xl font-bold ${last24hBatches && "animate-blink"}`}>
             {!CowData ? <Skeleton /> : <>
 
               {CowData?.filter(
@@ -186,7 +186,8 @@ export default function Cards({ data: CowDataPromise }: { data: Promise<Batch[]>
                   // minimumFractionDigits: 3,
                   maximumFractionDigits: 1,
                 })}
-              <span className=" text-xs font-medium ">
+              <span className=" block text-xs font-medium sm:inline ">
+                {" "}
                 <span
                   className={
                     percentageChangeVolCow >= 0 ? "text-green-600" : "text-red-600"
